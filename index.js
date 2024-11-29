@@ -19,13 +19,15 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     console.log("Database error", e);
 });
 //---------------------------------------------------------------//
-// Endpoint POST para el registro de credenciales de usuario-
+// Endpoint POST para el registro de credenciales de usuario -
 app.use("/api/user", authRoutes);
-// Endpoint POST para el login
+//---------------------------------------------------------------//
+// Endpoint POST para el login.
 app.use("/api/user", authLogin);
 //---------------------------------------------------------------//
 //Endpoint de bienvenida, inicio.
 app.get("/", (req, res) => {
+    console.log("Estás en el index.");
     res.json({ mensaje: "Bienvenido a mi Auth Api Rest" });
 });
 //---------------------------------------------------------------//
