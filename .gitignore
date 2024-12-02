@@ -1,3 +1,5 @@
 node_modules
 .env
 Clúster Mongo.txt
+package-lock.json
+.gitignore

@@ -10,15 +10,17 @@ const verifyToken = (req, res, next) => {
 
     try {
         // Verificamos el token usando la dependencia de jwt y el método .verify
+        console.log("Entro a la dependencia de jwt para comparar los tokens");
+        //console.log(token);
+        //console.log(process.env.TOKEN_SECRET);
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        console.log(token, "-- ", TOKEN_SECRET)
         // si el token es correcto nos devolvera los datos que pusimos en el token
         req.user = verified;
         // next() indica que el req paso la prueba y continue su camino
         next();
-        console.log("Token válido.\n")
+        console.log("Token válido.\n") //Confirma token valido.
     } catch (error) {
-        console.log("Token inválido.\n",error, "\n")
+        console.log("Token inválido.\n",error, "\n") // Error de token invalido.
         res.status(400).json({ error: "Token no valido, acceso denegado" });
     }
 };

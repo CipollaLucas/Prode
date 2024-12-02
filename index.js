@@ -18,7 +18,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
 }).catch((e) => {
     console.log("Database error", e);
 });
-//---------------------------------------------------------------//
+//------------------ ENDPOINTS ---------------------------------------------//
 // Endpoint POST para el registro de credenciales de usuario -
 app.use("/api/user", authRoutes);
 //---------------------------------------------------------------//
