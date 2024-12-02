@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 //Conexión con el clúester de Mongo.
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.5nmid.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-    console.log("Conectado a la base de datos");
+    console.log("Conectado a la base de datos. \n");
 }).catch((e) => {
     console.log("Database error", e);
 });
@@ -31,7 +31,14 @@ app.get("/", (req, res) => {
     res.json({ mensaje: "Bienvenido a mi Auth Api Rest" });
 });
 //---------------------------------------------------------------//
+// traemos los archivos necesarios
+const dashboardRoutes = require('./routes/dashboard')
+const verifyToken = require('./routes/validate-token')
+
+app.use('/api/dashboard', verifyToken, dashboardRoutes)
+
+//---------------------------------------------------------------//
 const PORT = process.env.PORT || 8005;
 app.listen(PORT, () => {
-    console.log(`Tu servidor está corriendo en el puerto: ${PORT}`);
+    console.log(`Tu servidor está corriendo en el puerto: ${PORT} \n`);
 });

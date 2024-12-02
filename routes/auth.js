@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
             error: null,
             data: savedUser
         })
-        console.log("Agregado exitosamente.")
+        console.log("Agregado exitosamente.\n")
     } catch (error) {
         res.status(400).json({error})
     }

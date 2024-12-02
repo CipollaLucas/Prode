@@ -13,7 +13,7 @@ const schemaLogin = Joi.object({
 
 /** ENDPOINT (POST)*/
 router.post("/login", async (req, res) => {
-    console.log("Estoy en el endpoint LOGIN.")
+    console.log("Estoy en el endpoint LOGIN. \n")
     // Validaciones de login
     const { error } = schemaLogin.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
