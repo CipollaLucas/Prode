@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
     console.log("Dentro de verifyToken. \n")
     // Obtenemos el token del header del request
-    const token = req.header("auth-token");
+    //const token = req.headers("auth-token");
+    const token = req.headers['authorization'];
     console.log("TOKEN: ", token)
     // Validamos si no hay token
     if (!token) return res.status(401).json({ error: "Acceso denegado. No está el token" });
@@ -13,6 +14,7 @@ const verifyToken = (req, res, next) => {
         console.log("Entro a la dependencia de jwt para comparar los tokens");
         //console.log(token);
         //console.log(process.env.TOKEN_SECRET);
+
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
         // si el token es correcto nos devolvera los datos que pusimos en el token
         req.user = verified;

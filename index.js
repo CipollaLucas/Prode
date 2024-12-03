@@ -28,7 +28,7 @@ app.use("/api/user", authLogin);
 //Endpoint de bienvenida, inicio.
 app.get("/", (req, res) => {
     console.log("Estás en el index.");
-    res.json({ mensaje: "Bienvenido a mi Auth Api Rest" });
+    res.json({ mensaje: "Bienvenido a mi Auth Api Rest de Usuarios" });
 });
 //---------------------------------------------------------------//
 // traemos los archivos necesarios
