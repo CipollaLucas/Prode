@@ -1,7 +1,9 @@
 const express = require("express");
-const authRoutes = require("./routes/auth.js");
-const authLogin = require("./routes/login.js");
-const authListar = require("./routes/listar.js");
+const registroUsuario = require("./routes/registroUsuario.js");
+const loginUsuario = require("./routes/loginUsuario.js");
+const usuariosListar = require("./routes/listarUsuarios.js");
+const usuarioDetalle = require("./routes/usuarioDetail.js");
+const usuarioDelete = require("./routes/usuarioDelete.js");
 require("dotenv").config();
 
 //Dependencias para crear instancias
@@ -17,18 +19,24 @@ const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("Conectado a la base de datos. \n");
 }).catch((e) => {
-    console.log("Database error", e);
+    console.log("Error en la conexión a la base.\n", e);
 });
 
 //------------------ ENDPOINTS ---------------------------------------------//
 // Endpoint POST para el registro de credenciales de usuario -
-app.use("/api/user", authRoutes);
+app.use("/api/user", registroUsuario);
 //---------------------------------------------------------------//
 // Endpoint POST para el login.
-app.use("/api/user", authLogin);
+app.use("/api/user", loginUsuario);
 //---------------------------------------------------------------//
 // Endpoint GET para listar los usuarios.
-app.use("/api/user", authListar);
+app.use("/api/user", usuariosListar);
+//---------------------------------------------------------------//
+// Endpoint GET para listar usuario en particular.
+app.use("/api/user", usuarioDetalle);
+//---------------------------------------------------------------//
+// Endpoint GET para listar usuario en particular.
+app.use("/api/user", usuarioDelete);
 //---------------------------------------------------------------//
 // --- Documentación con Swagger --- //
 //app.use("/api/api-docs",authDocs);

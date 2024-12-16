@@ -1,5 +1,8 @@
+//** Importamos el modulo de MongoDb */
 const mongoose = require("mongoose");
 
+//** Acá definimos el modelo de user y los campos que tendrá. */
+//* Se define como Schema porqué es la manera en la que mongo trata su colección.
 const userSchema = mongoose.Schema({
     username: {
         type: String,
@@ -36,4 +39,5 @@ const userSchema = mongoose.Schema({
     },
 });
 
+//** Se exporta el modelo con el nombre - User -  */
 module.exports = mongoose.model("User", userSchema);

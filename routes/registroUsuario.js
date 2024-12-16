@@ -38,6 +38,7 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(req.body.password, salt)
 
+    //Crea la instancia de usuario, y guarda los datos en la base de datos.
     const user = new User({
         username: req.body.username,
         name: req.body.name,
