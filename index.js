@@ -1,6 +1,7 @@
 const express = require("express");
 const authRoutes = require("./routes/auth.js");
 const authLogin = require("./routes/login.js");
+const authListar = require("./routes/listar.js");
 require("dotenv").config();
 
 //Dependencias para crear instancias
@@ -18,6 +19,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
 }).catch((e) => {
     console.log("Database error", e);
 });
+
 //------------------ ENDPOINTS ---------------------------------------------//
 // Endpoint POST para el registro de credenciales de usuario -
 app.use("/api/user", authRoutes);
@@ -25,13 +27,20 @@ app.use("/api/user", authRoutes);
 // Endpoint POST para el login.
 app.use("/api/user", authLogin);
 //---------------------------------------------------------------//
+// Endpoint GET para listar los usuarios.
+app.use("/api/user", authListar);
+//---------------------------------------------------------------//
+// --- Documentación con Swagger --- //
+//app.use("/api/api-docs",authDocs);
+//---------------------------------------------------------------//
 //Endpoint de bienvenida, inicio.
 app.get("/", (req, res) => {
     console.log("Estás en el index.");
     res.json({ mensaje: "Bienvenido a mi Auth Api Rest de Usuarios" });
 });
+
 //---------------------------------------------------------------//
-// traemos los archivos necesarios
+// --- JWT --- //
 const dashboardRoutes = require('./routes/dashboard')
 const verifyToken = require('./routes/validate-token')
 

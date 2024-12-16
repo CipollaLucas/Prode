@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');//Json Web Token para autorizar las peticion
 /** MODELO de esquema para validar. */
 // Creamos un esquema de registro usando las validaciones de Joi
 const schemaRegister = Joi.object({
-    name: Joi.string().min(6).max(255).required(),
+    username: Joi.string().min(6).max(255).required(),
+    name: Joi.string().min(3).max(255).required(),
     lastname: Joi.string().min(6).max(255).required(),
     email: Joi.string().min(6).max(255).required().email(),
     password: Joi.string().min(6).max(1024).required()
@@ -38,6 +39,7 @@ router.post('/register', async (req, res) => {
     const password = await bcrypt.hash(req.body.password, salt)
 
     const user = new User({
+        username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: password
