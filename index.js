@@ -4,6 +4,7 @@ const loginUsuario = require("./routes/loginUsuario.js");
 const usuariosListar = require("./routes/listarUsuarios.js");
 const usuarioDetalle = require("./routes/usuarioDetail.js");
 const usuarioDelete = require("./routes/usuarioDelete.js");
+const usuarioUpdate = require("./routes/usuarioUpdate.js");
 require("dotenv").config();
 
 //Dependencias para crear instancias
@@ -35,8 +36,11 @@ app.use("/api/user", usuariosListar);
 // Endpoint GET para listar usuario en particular.
 app.use("/api/user", usuarioDetalle);
 //---------------------------------------------------------------//
-// Endpoint GET para listar usuario en particular.
+// Endpoint GET para eliminar un usuario en particular.
 app.use("/api/user", usuarioDelete);
+//---------------------------------------------------------------//
+// Endpoint PUT para listar usuario en particular.
+app.use("/api/user", usuarioUpdate);
 //---------------------------------------------------------------//
 // --- Documentación con Swagger --- //
 //app.use("/api/api-docs",authDocs);
