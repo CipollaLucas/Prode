@@ -5,6 +5,7 @@ const usuariosListar = require("./routes/listarUsuarios.js");
 const usuarioDetalle = require("./routes/usuarioDetail.js");
 const usuarioDelete = require("./routes/usuarioDelete.js");
 const usuarioUpdate = require("./routes/usuarioUpdate.js");
+const usuarioChangepass = require("./routes/usuarioChangePass.js")
 require("dotenv").config();
 
 //Dependencias para crear instancias
@@ -41,6 +42,9 @@ app.use("/api/user", usuarioDelete);
 //---------------------------------------------------------------//
 // Endpoint PUT para listar usuario en particular.
 app.use("/api/user", usuarioUpdate);
+//---------------------------------------------------------------//
+// Endpoint PUT para actualizar o cambiar el password de un usuario en particular.
+app.use("/api/user", usuarioChangepass);
 //---------------------------------------------------------------//
 // --- Documentación con Swagger --- //
 //app.use("/api/api-docs",authDocs);

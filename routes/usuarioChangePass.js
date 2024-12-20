@@ -1,24 +1,25 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const Joi = require('@hapi/joi'); //Dependencia para realizar validaciones.
+const bcrypt = require('bcrypt');// Encriptacion de password
 
-// Esquema de los datos a validar al momento de actualizar
-const schemaUpdate = Joi.object({
-    name: Joi.string().min(3).max(255).required(),
-    lastname: Joi.string().min(6).max(255).required()
+// Esquema del pass para la validación
+const schemaPass = Joi.object({
+    password: Joi.string().min(6).max(1024).required()
 });
 
+
 /** ENDPOINT (PUT)*/
-/** Este endpoint trae los detalles de un usuario particular y le pasamos los datos que queremos updatear. */
-router.put("/update/:username", async (req, res) => {
-    console.log("Estoy en búsqueda de un usuario particular para hacer un update.");
+/** Este endpoint trae el password de un usuario particular y le pasamos la nueva contraseña. */
+router.put("/changePass/:username", async (req, res) => {
+    console.log("Estoy en búsqueda de un usuario particular para actualizar el password.");
     // Usaremos la propiedad error del objeto que nos entrega schemaRegister.validate()
-    const { error } = schemaUpdate.validate(req.body)
+    const { error } = schemaPass.validate(req.body)
     // Si este error existe, aqui se termina la ejecución devolviedonos el error
     if (error) {
         return res.status(400).json(
             {   error: error.details[0].message,
-                mensaje: "Asegurate de que el nombre y el apellido tenga 6 caraceters como mínimo y no sean numeros.\n"
+                mensaje: "Asegurate de que el passwor tenga 6 caraceters como mínimo.\n"
             }
         )
     }
@@ -28,21 +29,22 @@ router.put("/update/:username", async (req, res) => {
         // Validamos que exista
         const usuario = await User.findOne({ username: req.params.username });
         if (usuario) {
-            usuario.name = req.body.name;
-            usuario.lastname = req.body.lastname;
+            //Hasheamos el password. por medio de bcrypt
+            const salt = await bcrypt.genSalt(10);
+            const newpassword = await bcrypt.hash(req.body.password, salt);
             const savedUser = await usuario.save()
             res.status(200).json({
                 error: null,
-                mensaje: "Acá están los detalles del usuario actualizado",
-                body: usuario,
+                mensaje: "Acá está el nuevo password",
+                body: newpassword,
                 data: savedUser
             });
-        console.log("Actualizado exitosamente.\n")
+        console.log("Password actualizado exitosamente.\n")
 
         } else {
             res.status(404).json({ mensaje: "Usuario no encontrado." });
         }
-        console.log("Todo Ok. Detalles del usuario actualizado mostrado.\n") //Control.
+        console.log("Todo Ok. Detalles del usuario que ha actualizado el password.\n") //Control.
     }
     //Si falla por algún motivo sale.
     catch (error) {
